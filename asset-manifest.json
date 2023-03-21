@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/sbar-tool/static/css/main.9ed18dbb.css",
-    "main.js": "/sbar-tool/static/js/main.e8aac909.js",
+    "main.js": "/sbar-tool/static/js/main.b9f88bbc.js",
     "index.html": "/sbar-tool/index.html",
     "main.9ed18dbb.css.map": "/sbar-tool/static/css/main.9ed18dbb.css.map",
-    "main.e8aac909.js.map": "/sbar-tool/static/js/main.e8aac909.js.map"
+    "main.b9f88bbc.js.map": "/sbar-tool/static/js/main.b9f88bbc.js.map"
   },
   "entrypoints": [
     "static/css/main.9ed18dbb.css",
-    "static/js/main.e8aac909.js"
+    "static/js/main.b9f88bbc.js"
   ]
 }
