@@ -1,5 +1,4 @@
-import {mergeDeep} from "./helpers";
-
+import deepmerge from "deepmerge";
 
 type AuthOptions = {
   client: {
@@ -46,14 +45,14 @@ const CognitoAuthDefaults: AuthOptions = {
 };
 
 const devSandboxConfig: EnvironmentConfigProps = {
-  auth: mergeDeep(CognitoAuthDefaults,
+  auth: deepmerge(CognitoAuthDefaults,
     {
       client: {
         id: '36kidou82t6cdkimsef6av0pg2',
       },
       auth: {
         tokenHost: 'https://dev-ndp-sandbox-fhir-service.auth.eu-west-2.amazoncognito.com',
-        redirectUrl: 'http://localhost:3001/login-callback',
+        redirectUrl: 'https://pskillen-nes.github.io/login-callback',
       }
     }),
   empi: {
@@ -69,5 +68,13 @@ const devSandboxConfig: EnvironmentConfigProps = {
     }
   }
 };
+
+const localSandboxConfig: EnvironmentConfigProps = deepmerge(devSandboxConfig, {
+  auth: {
+    auth: {
+      redirectUrl: 'http://localhost:3001/login-callback',
+    }
+  }
+});
 
 export default devSandboxConfig;
