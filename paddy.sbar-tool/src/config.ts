@@ -15,6 +15,9 @@ type AuthOptions = {
 }
 
 type EnvironmentConfigProps = {
+  site: {
+    urlRoot: string,
+  }
   auth: AuthOptions,
   empi: {
     baseUrl: string,
@@ -45,6 +48,9 @@ const CognitoAuthDefaults: AuthOptions = {
 };
 
 const devSandboxConfig: EnvironmentConfigProps = {
+  site: {
+    urlRoot: '/sbar-tool/',
+  },
   auth: deepmerge(CognitoAuthDefaults,
     {
       client: {
@@ -52,7 +58,7 @@ const devSandboxConfig: EnvironmentConfigProps = {
       },
       auth: {
         tokenHost: 'https://dev-ndp-sandbox-fhir-service.auth.eu-west-2.amazoncognito.com',
-        redirectUrl: 'https://pskillen-nes.github.io/login-callback',
+        redirectUrl: 'https://pskillen-nes.github.io/sbar-tool/',
       }
     }),
   empi: {
@@ -70,11 +76,15 @@ const devSandboxConfig: EnvironmentConfigProps = {
 };
 
 const localSandboxConfig: EnvironmentConfigProps = deepmerge(devSandboxConfig, {
+  site: {
+    urlRoot: '/',
+  },
   auth: {
     auth: {
-      redirectUrl: 'http://localhost:3001/login-callback',
+      redirectUrl: 'http://localhost:3001/',
     }
   }
 });
 
 export default devSandboxConfig;
+// export default localSandboxConfig;

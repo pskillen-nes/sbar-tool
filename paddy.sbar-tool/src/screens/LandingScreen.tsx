@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Alert, Button, Container} from "react-bootstrap";
+import {useLocation} from "react-router-dom";
 import {Composition, Patient, Practitioner} from "fhir/r4";
 
 import config from "../config";
@@ -8,9 +9,9 @@ import {useAuth} from "../service/Auth";
 import {fhirIdentifierSystem} from "../constants";
 
 import {getFriendlyErrorMessage} from "../helpers";
+import {getDefaultNameForPerson, getSbarComponents} from "../fhirHelpers";
 
 import AddSbarModal from "../components/modals/AddSbarModal";
-import {getDefaultNameForPerson, getSbarComponents} from "../fhirHelpers";
 
 function SbarListItem(props: { composition: Composition, patient?: Patient, practitioner?: Practitioner }) {
   return <li>
@@ -20,7 +21,8 @@ function SbarListItem(props: { composition: Composition, patient?: Patient, prac
 
 export default function LandingScreen(): JSX.Element {
 
-  const {user, signIn, signOut, idToken} = useAuth();
+  // const location = useLocation();
+  const {user, signIn, signOut, idToken, handleLoginCallback, decodeCallbackParams} = useAuth();
 
   const [sbarList, setSbarList] = useState<[Composition, Patient, Practitioner][]>([]);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -43,6 +45,26 @@ export default function LandingScreen(): JSX.Element {
     fhirWorksApi = undefined;
     loadAPIs();
   }, [idToken, user]);
+
+
+  useEffect(() => {
+    const state = decodeCallbackParams(window.location);
+    if (!state) {
+      return;
+    }
+
+    if (state.code) {
+      handleLoginCallback(window.location)
+        .then(() => {
+        })
+        .catch(e => {
+          setError(getFriendlyErrorMessage(e));
+        });
+
+      return;
+    }
+  }, []);
+
 
   async function loadSbarList() {
     loadAPIs();
@@ -107,6 +129,7 @@ export default function LandingScreen(): JSX.Element {
           <li><i className="fa fa-check text-success"></i> Delay reloading SBARs on add</li>
           <li><i className="fa fa-check text-success"></i> Display SBARs as table</li>
           <li><i className="fa fa-check text-success"></i> Display SBARs contents ('open' SBAR)</li>
+          <li><i className="fa fa-check text-success"></i> Add self as Practitioner</li>
         </ul>
       </Alert>
 

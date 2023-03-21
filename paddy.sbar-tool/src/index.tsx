@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createRoot} from "react-dom/client";
-import {BrowserRouter, Navigate, Route, Routes, useLocation} from "react-router-dom";
+import {HashRouter, Navigate, Route, Routes, useLocation} from "react-router-dom";
 
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -16,7 +16,6 @@ import './overrides.css';
 
 import LandingScreen from "./screens/LandingScreen";
 import UserInfoScreen from "./screens/user/UserInfoScreen";
-import LoginScreen from "./screens/LoginScreen";
 
 
 dayjs.extend(utc);
@@ -37,7 +36,7 @@ function RedirectToOriginalRoute() {
 function App(): JSX.Element {
   const {user} = useAuthContext()
 
-  return <BrowserRouter>
+  return <HashRouter>
     <AuthProvider>
       <Routes>
 
@@ -52,8 +51,6 @@ function App(): JSX.Element {
         </>}
 
         {!user && <>
-          <Route path='/login' element={<LoginScreen/>}/>
-          <Route path='/login-callback' element={<LoginScreen/>}/>
         </>}
 
         <Route path="/" element={<LandingScreen/>}/>
@@ -62,7 +59,7 @@ function App(): JSX.Element {
 
       </Routes>
     </AuthProvider>
-  </BrowserRouter>;
+  </HashRouter>;
 }
 
 const container = document.getElementById('root');

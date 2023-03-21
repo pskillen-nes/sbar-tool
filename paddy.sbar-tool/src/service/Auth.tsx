@@ -1,6 +1,5 @@
 import React, {createContext, ReactElement, useContext, useEffect, useState} from "react";
 import {Navigate, Route, RouteProps, useLocation} from "react-router-dom";
-import {Location} from "history";
 import axios, {AxiosRequestConfig} from "axios";
 import {useLocalStorage} from "usehooks-ts";
 
@@ -142,7 +141,7 @@ export const useAuth = () => {
       return;
     }
 
-    window.location.href = '/';
+    window.location.href = config.site.urlRoot;
   }
 
   async function signUp() {
