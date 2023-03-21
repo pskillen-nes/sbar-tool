@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <clipPath id="clip-NDP-Icon">
+      <rect width="100" height="100"/>
+    </clipPath>
+  </defs>
+  <g id="NDP-Icon" clip-path="url(#clip-NDP-Icon)">
+    <path id="Path_18" data-name="Path 18" d="M111.5,48.97a2.612,2.612,0,0,1,2.583,2.866,28.119,28.119,0,0,1-55.992,0,2.612,2.612,0,0,1,2.583-2.866Z" transform="translate(-36.081 -45.142)" fill="#fff"/>
+    <path id="Path_19" data-name="Path 19" d="M111.5,111.265H60.679A2.612,2.612,0,0,1,58.1,108.4a28.119,28.119,0,0,1,55.992,0,2.612,2.612,0,0,1-2.583,2.866" transform="translate(-36.081 -15.094)" fill="#fff"/>
+    <path id="Path_20" data-name="Path 20" d="M76.758,86.71a28.269,28.269,0,0,1-25.3,28.2,2.594,2.594,0,0,1-2.828-2.6V61.108a2.6,2.6,0,0,1,2.828-2.6,28.269,28.269,0,0,1,25.3,28.2" transform="translate(-44.451 -36.71)" fill="#fff"/>
+    <path id="Path_21" data-name="Path 21" d="M110.457,61.108v51.205a2.611,2.611,0,0,1-2.847,2.6,28.371,28.371,0,0,1,0-56.409,2.6,2.6,0,0,1,2.847,2.6" transform="translate(-14.636 -36.71)" fill="#fff"/>
+  </g>
+</svg>
