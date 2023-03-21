@@ -124,6 +124,7 @@ export default function LandingScreen(): JSX.Element {
         <ul className="list-unstyled">
           <li><i className="fa fa-check text-success"></i> Navbar</li>
           <li><i className="fa fa-check text-success"></i> Accept API key in an input field</li>
+          <li><i className="fa fa-check text-success"></i> Accept Cognito client ID in an input field</li>
           <li><i className="fa fa-check text-success"></i> Getting started instructions</li>
           <li><i className="fa fa-check text-success"></i> Loading spinner for SBARs</li>
           <li><i className="fa fa-check text-success"></i> Delay reloading SBARs on add</li>

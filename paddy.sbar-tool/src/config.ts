@@ -54,7 +54,7 @@ const devSandboxConfig: EnvironmentConfigProps = {
   auth: deepmerge(CognitoAuthDefaults,
     {
       client: {
-        id: '36kidou82t6cdkimsef6av0pg2',
+        id: '8vukkhs8sgsp3pkqt4rhcfrdn',
       },
       auth: {
         tokenHost: 'https://dev-ndp-sandbox-fhir-service.auth.eu-west-2.amazoncognito.com',
@@ -63,11 +63,11 @@ const devSandboxConfig: EnvironmentConfigProps = {
     }),
   empi: {
     baseUrl: 'https://empi.sandbox.dev.platform.ndp.scot',
-    apiKey: 'Ee0cIBodUg8v80rSrvcws4upphBRqwVY2PwTePY1',
+    apiKey: 'EP6G9q72B36nT0bw4wBJ74yMa12f05XeFLwONL34',
   },
   fhir: {
     baseUrl: 'https://ndp-sandbox-clinical-fhir.dev.platform.ndp.scot',
-    apiKey: 'Ee0cIBodUg8v80rSrvcws4upphBRqwVY2PwTePY1',
+    apiKey: 'EP6G9q72B36nT0bw4wBJ74yMa12f05XeFLwONL34',
     corsAnywhere: {
       enabled: true,
       urlPrefix: 'http://localhost:7080/',
