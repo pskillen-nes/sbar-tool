@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/sbar-tool/static/css/main.9ed18dbb.css",
-    "main.js": "/sbar-tool/static/js/main.8af3635d.js",
+    "main.css": "/sbar-tool/static/css/main.8ed54b54.css",
+    "main.js": "/sbar-tool/static/js/main.c0a49805.js",
     "index.html": "/sbar-tool/index.html",
-    "main.9ed18dbb.css.map": "/sbar-tool/static/css/main.9ed18dbb.css.map",
-    "main.8af3635d.js.map": "/sbar-tool/static/js/main.8af3635d.js.map"
+    "main.8ed54b54.css.map": "/sbar-tool/static/css/main.8ed54b54.css.map",
+    "main.c0a49805.js.map": "/sbar-tool/static/js/main.c0a49805.js.map"
   },
   "entrypoints": [
-    "static/css/main.9ed18dbb.css",
-    "static/js/main.8af3635d.js"
+    "static/css/main.8ed54b54.css",
+    "static/js/main.c0a49805.js"
   ]
 }
