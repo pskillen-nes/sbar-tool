@@ -12,6 +12,7 @@ import {getFriendlyErrorMessage} from "../helpers";
 import {getDefaultNameForPerson, getSbarComponents} from "../fhirHelpers";
 
 import AddSbarModal from "../components/modals/AddSbarModal";
+import BaseScreen from "./BaseScreen";
 
 function SbarListItem(props: { composition: Composition, patient?: Patient, practitioner?: Practitioner }) {
   return <li>
@@ -115,9 +116,8 @@ export default function LandingScreen(): JSX.Element {
     }
   }
 
-  return <>
-    <Container>
-      <h1>Landing!</h1>
+  return <BaseScreen pageTitle="Welcome"
+                     pageSubtitle="This tool demonstrates some of the capabilities of the NDP Sandbox environment">
 
     <Alert variant="danger">
       <h2>To do</h2>
@@ -166,5 +166,5 @@ export default function LandingScreen(): JSX.Element {
     <AddSbarModal show={addSbarVisible}
                   onHide={() => setAddSbarVisible(false)}
                   onSubmit={handleSbarSubmit}/>
-  </>;
+  </BaseScreen>;
 }
