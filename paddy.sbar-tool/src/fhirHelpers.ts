@@ -1,7 +1,10 @@
 import {Bundle, Composition, Patient, Practitioner} from "fhir/r4";
 import dayjs from "dayjs";
 
+import {SbarBundle, SbarComponents} from "./types";
 import {fhirIdentifierSystem} from "./constants";
+import {EmpiAPI} from "./service/EmpiAPI";
+import {FHIRWorksAPI} from "./service/FHIRWorksAPI";
 
 export function getDefaultNameForPerson(p?: Patient | Practitioner, order: 'first-last' | 'last-first' = 'first-last'): string {
   if (!p)
@@ -63,7 +66,7 @@ export function buildSBAR(patientId: string,
   return sbar;
 }
 
-export function getSbarComponents(bundle: Bundle, compositionId: string): [Composition, (Patient | undefined), (Practitioner | undefined)] | undefined {
+export function extractSbarResources(bundle: Bundle, compositionId: string): SbarBundle | undefined {
 
   if (!bundle.entry || bundle.entry.length === 0)
     return undefined;
@@ -84,4 +87,72 @@ export function getSbarComponents(bundle: Bundle, compositionId: string): [Compo
   const practitioner = practitioners.length > 0 ? practitioners[0].resource as Practitioner : undefined;
 
   return [composition, patient, practitioner];
+}
+
+export async function loadSbarResources(pack: SbarBundle, empiApi: EmpiAPI, fhirWorksApi: FHIRWorksAPI): Promise<SbarBundle> {
+  const [composition] = pack;
+  const [patient, practitioner] = await Promise.all([
+    loadSbarPatient(pack, empiApi, fhirWorksApi),
+    loadSbarPractitioner(pack, fhirWorksApi),
+  ]);
+
+  return [composition, patient, practitioner];
+}
+
+export async function loadSbarPatient([comp, patient, practitioner]: SbarBundle, empiApi: EmpiAPI, fhirWorksApi: FHIRWorksAPI): Promise<Patient | undefined> {
+  if (patient)
+    return patient;
+
+  const patientId = comp.subject?.reference?.replace('Patient/', '');
+  if (!patientId)
+    return undefined;
+
+  // Lookup by CHI
+  if (patientId.match(/\d{10}/)) {
+    const result = await empiApi.getPatientByChi(patientId);
+    if (result.resourceType === 'Patient')
+      return result as Patient;
+  } else {
+    const result = await fhirWorksApi.getResourceById<Patient>('Patient', patientId);
+    if (result.resourceType === 'Patient')
+      return result as Patient;
+  }
+
+  return undefined;
+}
+
+export async function loadSbarPractitioner([comp, patient, practitioner]: SbarBundle, fhirWorksApi: FHIRWorksAPI): Promise<Practitioner | undefined> {
+  if (practitioner)
+    return practitioner;
+
+  const practitionerId = comp.author?.[0]?.reference?.replace('Practitioner/', '');
+  if (!practitionerId)
+    return undefined;
+
+  const result = await fhirWorksApi.getResourceById<Practitioner>('Practitioner', practitionerId);
+  if (result.resourceType === 'Practitioner')
+    return result as Practitioner;
+
+  return undefined;
+}
+
+export function extractSbarComponents(composition?: Composition): SbarComponents {
+  function getSectionTextByName(composition: Composition, sectionName: string): string | undefined {
+    const sections = composition.section?.filter(s => s.title === sectionName);
+
+    if (!sections || sections.length === 0)
+      return undefined;
+
+    return sections[0].text?.div;
+  }
+
+  if (!composition)
+    return {situation: "", background: "", assessment: "", recommendation: ""};
+
+  return {
+    situation: getSectionTextByName(composition, 'Situation') || '',
+    background: getSectionTextByName(composition, 'Background') || '',
+    assessment: getSectionTextByName(composition, 'Assessment') || '',
+    recommendation: getSectionTextByName(composition, 'Recommendation') || '',
+  };
 }

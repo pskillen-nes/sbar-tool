@@ -1,31 +1,21 @@
 import React, {useEffect, useState} from "react";
-import {Alert, Button, Container} from "react-bootstrap";
-import {useLocation} from "react-router-dom";
-import {Composition, Patient, Practitioner} from "fhir/r4";
+import {Alert, Button} from "react-bootstrap";
+import {Composition} from "fhir/r4";
 
 import config from "../config";
 import {FHIRWorksAPI} from "../service/FHIRWorksAPI";
 import {useAuth} from "../service/Auth";
-import {fhirIdentifierSystem} from "../constants";
 
 import {getFriendlyErrorMessage} from "../helpers";
-import {getDefaultNameForPerson, getSbarComponents} from "../fhirHelpers";
 
 import AddSbarModal from "../components/modals/AddSbarModal";
 import BaseScreen from "./BaseScreen";
 
-function SbarListItem(props: { composition: Composition, patient?: Patient, practitioner?: Practitioner }) {
-  return <li>
-    <i className="fa fa-file-text-o"></i> {props.patient ? getDefaultNameForPerson(props.patient) : '(unknown patient)'}
-  </li>;
-}
 
 export default function LandingScreen(): JSX.Element {
 
-  // const location = useLocation();
-  const {user, signIn, signOut, idToken, handleLoginCallback, decodeCallbackParams} = useAuth();
+  const {user, idToken, handleLoginCallback, decodeCallbackParams} = useAuth();
 
-  const [sbarList, setSbarList] = useState<[Composition, Patient, Practitioner][]>([]);
   const [error, setError] = useState<string | undefined>(undefined);
 
   const [addSbarVisible, setAddSbarVisible] = useState<boolean>(false);
@@ -66,41 +56,6 @@ export default function LandingScreen(): JSX.Element {
     }
   }, []);
 
-
-  async function loadSbarList() {
-    loadAPIs();
-
-    if (!fhirWorksApi) return;
-
-    try {
-      const bundle = await fhirWorksApi.searchByField(
-        'Composition',
-        'sbar',
-        fhirIdentifierSystem.documentType,
-        'type',
-        ['Composition:subject', 'Composition:author']
-      );
-
-      if (!bundle.entry || bundle.entry.length === 0) {
-        setSbarList([]);
-        return;
-      }
-
-      const compositions = bundle.entry
-        .filter(e => e.resource?.resourceType === 'Composition')
-        .map(e => e.resource as Composition);
-
-      const sbarList = compositions.map(c => getSbarComponents(bundle, c.id!))
-        .filter(pack => pack !== undefined);
-      // @ts-ignore - we have filtered out the undefined elements
-      setSbarList(sbarList);
-
-    } catch (e) {
-      setSbarList([]);
-      setError(getFriendlyErrorMessage(e));
-    }
-  }
-
   async function handleSbarSubmit(data: Composition) {
     loadAPIs();
     if (!fhirWorksApi) return;
@@ -108,7 +63,7 @@ export default function LandingScreen(): JSX.Element {
     try {
       const response = await fhirWorksApi.post<Composition>(data, 'Composition');
 
-      loadSbarList();
+      // loadSbarList();
 
       setAddSbarVisible(false);
     } catch (e) {
@@ -134,28 +89,9 @@ export default function LandingScreen(): JSX.Element {
       </ul>
     </Alert>
 
-      {user && <>
-        <h2>Welcome {user.username}</h2>
-        <Button onClick={() => signOut()}>Sign out</Button>
+    {error && <Alert title="Error"
+                     variant="danger">{error}</Alert>}
 
-      </>}
-
-      {!user && <>
-        <Button onClick={() => signIn()}>Login</Button>
-      </>}
-
-      {error && <Alert title="Error"
-                       variant="danger">{error}</Alert>}
-
-      <h2>List patients</h2>
-      <p><Button variant="link"
-                 onClick={() => loadSbarList()}>Load SBARs</Button></p>
-      {sbarList && <>
-        <ul className="list-unstyled">
-          {sbarList.map(([c, pat, pr]) =>
-            <SbarListItem composition={c} patient={pat} practitioner={pr}/>)}
-        </ul>
-      </>}
 
       <Button variant="primary"
               onClick={() => setAddSbarVisible(true)}>

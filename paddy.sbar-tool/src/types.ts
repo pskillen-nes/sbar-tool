@@ -1,3 +1,5 @@
+import {Composition, Patient, Practitioner} from "fhir/r4";
+
 export type CognitoOauthToken = {
   access_token: string;
   id_token?: string;
@@ -10,4 +12,13 @@ export type User = {
   username: string;
   sandboxId: string;
   fhirTenantId: string;
+}
+
+export type SbarBundle = [Composition, Patient | undefined, Practitioner | undefined];
+
+export type SbarComponents = {
+  situation: string;
+  background: string;
+  recommendation: string;
+  assessment: string;
 }
