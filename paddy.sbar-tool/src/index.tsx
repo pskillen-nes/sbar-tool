@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import utc from "dayjs/plugin/utc";
 
-import {AuthProvider, useAuthContext} from "./service/Auth";
+import {AuthProvider} from "./service/Auth";
 import config from "./config";
 
 import './overrides.css';
@@ -14,6 +14,7 @@ import './overrides.css';
 import LandingScreen from "./screens/LandingScreen";
 import UserInfoScreen from "./screens/user/UserInfoScreen";
 import ListSBARsScreen from "./screens/ListSBARsScreen";
+import AddSBARScreen from "./screens/AddSBARScreen";
 import ViewSBARScreen from "./screens/ViewSBARScreen";
 
 
@@ -22,7 +23,6 @@ dayjs.extend(customParseFormat);
 
 
 function App(): JSX.Element {
-  const {user} = useAuthContext()
 
   return <HashRouter basename={'/'}>
     <AuthProvider>
@@ -30,6 +30,7 @@ function App(): JSX.Element {
 
         <Route path="/user" element={<UserInfoScreen/>}/>
         <Route path="/sbar" element={<ListSBARsScreen/>}/>
+        <Route path="/sbar/add" element={<AddSBARScreen/>}/>
         <Route path="/sbar/:id" element={<ViewSBARScreen/>}/>
 
         <Route path="/" element={<LandingScreen/>}/>
