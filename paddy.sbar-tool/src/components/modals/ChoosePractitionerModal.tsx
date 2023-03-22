@@ -121,7 +121,7 @@ export default function ChoosePractitionerModal(props: {
             Please provide a first, last, or both names.
           </Form.Control.Feedback>
           {notFound && <Form.Text className="text-danger">
-            <i className="fa fa-close"></i> No practitioner found with this name.
+            <i className="fa-solid fa-close"></i> No practitioner found with this name.
           </Form.Text>}
         </Form.Group>
 
@@ -133,7 +133,7 @@ export default function ChoosePractitionerModal(props: {
         <ul className="list-unstyled">
           {foundPractitioners.map(p => <li key={p.id}>
             <div>
-              <i className="fa fa-user-circle"></i>{' '}
+              <i className="fa-solid fa-user-circle"></i>{' '}
               {getDefaultNameForPerson(p, 'last-first')}
               <Button variant="outline-secondary" className="pt-0 pb-0"
                       onClick={() => setSelectedPractitioner(p)}>Select</Button>

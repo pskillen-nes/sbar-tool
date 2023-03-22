@@ -142,7 +142,7 @@ export default function ChoosePatientModal(props: {
             Please provide a valid CHI (10 numeric digits).
           </Form.Control.Feedback>
           {notFound && <Form.Text className="text-danger">
-            <i className="fa fa-close"></i> Patient not found with this CHI
+            <i className="fa-solid fa-close"></i> Patient not found with this CHI
           </Form.Text>}
         </Form.Group>
 

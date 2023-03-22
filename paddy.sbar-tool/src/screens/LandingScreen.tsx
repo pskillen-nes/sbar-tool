@@ -119,20 +119,20 @@ export default function LandingScreen(): JSX.Element {
     <Container>
       <h1>Landing!</h1>
 
-      <Alert variant="danger">
-        <h2>To do</h2>
-        <ul className="list-unstyled">
-          <li><i className="fa fa-check text-success"></i> Navbar</li>
-          <li><i className="fa fa-check text-success"></i> Accept API key in an input field</li>
-          <li><i className="fa fa-check text-success"></i> Accept Cognito client ID in an input field</li>
-          <li><i className="fa fa-check text-success"></i> Getting started instructions</li>
-          <li><i className="fa fa-check text-success"></i> Loading spinner for SBARs</li>
-          <li><i className="fa fa-check text-success"></i> Delay reloading SBARs on add</li>
-          <li><i className="fa fa-check text-success"></i> Display SBARs as table</li>
-          <li><i className="fa fa-check text-success"></i> Display SBARs contents ('open' SBAR)</li>
-          <li><i className="fa fa-check text-success"></i> Add self as Practitioner</li>
-        </ul>
-      </Alert>
+    <Alert variant="danger">
+      <h2>To do</h2>
+      <ul className="list-unstyled">
+        <li><i className="fa-solid fa-check text-success"></i> Navbar</li>
+        <li><i className="fa-solid fa-check text-success"></i> Accept API key in an input field</li>
+        <li><i className="fa-solid fa-check text-success"></i> Accept Cognito client ID in an input field</li>
+        <li><i className="fa-solid fa-check text-success"></i> Getting started instructions</li>
+        <li><i className="fa-solid fa-check text-success"></i> Loading spinner for SBARs</li>
+        <li><i className="fa-solid fa-check text-success"></i> Delay reloading SBARs on add</li>
+        <li><i className="fa-solid fa-check text-success"></i> Display SBARs as table</li>
+        <li><i className="fa-solid fa-check text-success"></i> Display SBARs contents ('open' SBAR)</li>
+        <li><i className="fa-solid fa-check text-success"></i> Add self as Practitioner</li>
+      </ul>
+    </Alert>
 
       {user && <>
         <h2>Welcome {user.username}</h2>

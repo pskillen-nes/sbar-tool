@@ -75,7 +75,7 @@ export default function AddSbarModal(props: {
                 <Form.Control value={patient && getDefaultNameForPerson(patient, 'first-last')}
                               readOnly={true}/>
                 <Button onClick={() => setSelectPatientVisible(true)}>
-                  <i className="fa fa-search"></i>
+                  <i className="fa-solid fa-search"></i>
                 </Button>
               </InputGroup>
             </Form.Group>
@@ -86,7 +86,7 @@ export default function AddSbarModal(props: {
                 <Form.Control value={practitioner && getDefaultNameForPerson(practitioner, 'first-last')}
                               readOnly={true}/>
                 <Button onClick={() => setSelectPractitionerVisible(true)}>
-                  <i className="fa fa-search"></i>
+                  <i className="fa-solid fa-search"></i>
                 </Button>
               </InputGroup>
             </Form.Group>
