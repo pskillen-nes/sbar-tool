@@ -31,6 +31,13 @@ type EnvironmentConfigProps = {
       urlPrefix: string,
     }
   },
+  formats: {
+    shortDateFormat: string,
+    longDateFormat: string,
+    shortDateTimeFormat: string,
+    timeFormat: string,
+    timeFormatSeconds: string,
+  }
 }
 
 const CognitoAuthDefaults: AuthOptions = {
@@ -47,11 +54,21 @@ const CognitoAuthDefaults: AuthOptions = {
   }
 };
 
-const devSandboxConfig: EnvironmentConfigProps = {
+const ConfigDefaults = {
+  formats: {
+    shortDateFormat: 'DD/MM/YYYY',
+    longDateFormat: 'DD MMM YYYY',
+    shortDateTimeFormat: 'DD/MM/YYYY HH:mm',
+    timeFormat: 'HH:mm',
+    timeFormatSeconds: 'HH:mm:ss',
+  }
+}
+
+const devSandboxConfig: EnvironmentConfigProps = deepmerge(ConfigDefaults, {
   site: {
     urlRoot: '/sbar-tool/',
   },
-  auth: deepmerge(CognitoAuthDefaults,
+  auth: deepmerge<AuthOptions, any>(CognitoAuthDefaults,
     {
       client: {
         id: '8vukkhs8sgsp3pkqt4rhcfrdn',
@@ -72,10 +89,10 @@ const devSandboxConfig: EnvironmentConfigProps = {
       enabled: true,
       urlPrefix: 'http://localhost:7080/',
     }
-  }
-};
+  },
+}) as EnvironmentConfigProps;
 
-const localSandboxConfig: EnvironmentConfigProps = deepmerge(devSandboxConfig, {
+const localSandboxConfig: EnvironmentConfigProps = deepmerge<EnvironmentConfigProps, any>(devSandboxConfig, {
   site: {
     urlRoot: '/',
   },

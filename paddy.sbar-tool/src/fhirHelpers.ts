@@ -3,7 +3,9 @@ import dayjs from "dayjs";
 
 import {fhirIdentifierSystem} from "./constants";
 
-export function getDefaultNameForPerson(p: Patient | Practitioner, order: 'first-last' | 'last-first' = 'first-last'): string {
+export function getDefaultNameForPerson(p?: Patient | Practitioner, order: 'first-last' | 'last-first' = 'first-last'): string {
+  if (!p)
+    return '';
   if (!p.name || p.name.length === 0)
     return '(unnamed)';
 
@@ -15,16 +17,18 @@ export function getDefaultNameForPerson(p: Patient | Practitioner, order: 'first
   return `${firstHumanName.family ? firstHumanName.family + ', ' : ''}${firstHumanName.prefix || ''} ${firstHumanName.given?.join(' ') || ''} ${firstHumanName.suffix || ''}`;
 }
 
-export function getChiForPatient(p: Patient): string | undefined {
+export function getChiForPatient(p?: Patient): string {
+  if (!p)
+    return '';
   if (!p.identifier || p.identifier.length === 0)
-    return undefined;
+    return '(unknown)';
 
   const chiIdentifiers = p.identifier.filter(ident => ident.system === fhirIdentifierSystem.chiNumber);
 
   if (!chiIdentifiers || chiIdentifiers.length === 0)
-    return undefined;
+    return '';
 
-  return chiIdentifiers[0].value;
+  return chiIdentifiers[0].value || '';
 }
 
 export function buildSBAR(patientId: string,
